@@ -1,0 +1,11 @@
+{
+  "name": "node-api-postgres",
+  "version": "1.0.0",
+  "description": "Api restful using PostgreSQL database",
+  "main": "index.js",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.4.1"
+  }
+}
