@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="../Styles/styles.css">
+  </head>
+  <body>
+    <div class="main">
+      <form onsubmit="login(event)">
+        <span>Name</span>
+        <input type="text" class="name" placeholder="Nome..." required />
+        <span>Email</span>
+        <input type="email" class="email" placeholder="exemplo@email.com" required />
+        <button type="submit">Entrar</button>
+      </form>
+    </div>
+    <script src="../../node-api-postgres/index.js"></script>
+  </body>
+</html>
