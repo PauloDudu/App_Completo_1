@@ -1,2 +1,2 @@
 # App_Completo_1
-Primeira aplicação com FrontEnd com React e Back com Node Js e Postgres
+Minha primeira aplicação full stack com frontEnd no React JS e backEnd Api no Node Js e banco de dados no PostgreSql
