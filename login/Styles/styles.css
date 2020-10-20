@@ -19,11 +19,47 @@ div.main {
 div.main form {
     display: flex;
     flex-direction: column;
-    background: blueviolet;
+    /* background: blueviolet; */
     padding: 30px;
-    border-radius: 12px;
-    box-shadow: 2px 1px 10px rgb(209, 13, 235)
+    /* border-radius: 12px; */
+    /* box-shadow: 2px 1px 10px rgb(209, 13, 235) */
 
+    position: relative;
+    /* width: 350px; */
+    /* padding: 40px 40px 60px; */
+    background: #131419;
+    /* border-radius: 10px; */
+    /* text-aling: center; */
+    /* box-shadow: -5px -3px 10px rgba(255,255,255,0.09),
+                 5px 3px 13px rgba(0,0,0,0.4);  */
+
+}
+
+div.main form::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    z-index: -1;
+}
+
+div.main form::after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    z-index: -2;
+    filter: blur(30px)
+}
+
+div.main form::before,
+div.main form::after {
+background: linear-gradient(235deg, 
+#FF0047, #242426, #00bcd4 );
 }
 
 div.main form span {
@@ -53,7 +89,7 @@ div.main form input:hover {
 div.main form button { 
     margin: 20px auto;
     padding: 10px;
-    color: blueviolet;
+    color: black;
     outline: 0;
     border: 0;
     font-weight: 600;

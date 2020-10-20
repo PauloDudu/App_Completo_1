@@ -12,7 +12,6 @@ const getUsers = (request, response) => {
         if(error) {
             throw error;
         }
-        // response.status(200).json(results.rows)
         console.log(response.json(results.rows))
     })
 }
@@ -35,7 +34,7 @@ const createUser = (request, response) => {
         if(error) {
             throw error;
         }
-        response.status(201).send(`User added with ID: ${result.insertId}`);
+        response.status(201).send(`User added with ID: ${response}`);
     })
 }
 
