@@ -6,7 +6,7 @@ export default createGlobalStyle`
     padding: 0;
     outline: 0;
     box-sizing: border-box;
-    background: #C8C8C8;
+    /* background: #C8C8C8; */
   }
 
   html, body, #root{

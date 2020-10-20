@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 
 import api from "../../services/api";
 
@@ -11,10 +13,15 @@ import {
   UserContainer
 } from './styles';
 
+import { Link } from "react-router-dom";
+
 const Users = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
+
+  const [open, setOpen] = React.useState(false);
+
 
   const showUsers = async () => {
     try {
@@ -35,11 +42,10 @@ const Users = () => {
     try {
       const response = await api.post("users", params);
       console.log(response.data);
+      setOpen(true);
     } catch (error) {
       console.log("createUser: ", error);
-    } finally {
-      showUsers();
-    }
+    } 
   };
 
   const deleteUser = async (id) => {
@@ -53,12 +59,15 @@ const Users = () => {
     }
   };
 
+  
+
   useEffect(() => {
     showUsers();
   }, []);
 
   return (
     <>
+    <Link to="/Login">Login</Link>
       <FormContainer onSubmit={() => createUser()}>
         <div>
           <input
@@ -99,8 +108,17 @@ const Users = () => {
           );
         })}
       </UserContainer>
+      <Snackbar open={open} autoHideDuration={2000} onClose={() => setOpen(false)}>
+        <Alert onClose={() => setOpen(false)} severity="success">
+          This is a success message!
+        </Alert>
+      </Snackbar>
     </>
   );
 };
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 export default Users;
