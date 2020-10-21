@@ -10,15 +10,21 @@ import {
   FormContainer,
   User,
   Body,
+  Header,
   UserContainer
 } from './styles';
+
+import { useAuth } from '../../hooks/auth';
 
 import { Link } from "react-router-dom";
 
 const Users = () => {
+  const { signOut } = useAuth();
+
   const [usuarios, setUsuarios] = useState([]);
-  const [nome, setNome] = useState("");
-  const [email, setEmail] = useState("");
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
 
   const [open, setOpen] = React.useState(false);
 
@@ -37,6 +43,7 @@ const Users = () => {
     const params = {
       name: `${nome}`,
       email: `${email}`,
+      senha: `${senha}`
     };
 
     try {
@@ -59,6 +66,11 @@ const Users = () => {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      console.log('do validate')
+    }
+  }
   
 
   useEffect(() => {
@@ -67,7 +79,12 @@ const Users = () => {
 
   return (
     <>
-    <Link to="/Login">Login</Link>
+    <Header>
+    <button onClick={() => signOut()}>Logout</button>
+    <Link to='/teste'>Teste</Link>
+
+    </Header>
+
       <FormContainer onSubmit={() => createUser()}>
         <div>
           <input
@@ -75,6 +92,7 @@ const Users = () => {
             onChange={(e) => setNome(e.target.value)}
             placeholder="Nome..."
             class="form-control"
+            onKeyDown={(e) => handleKeyDown(e)}
           />
 
           <input
@@ -82,6 +100,15 @@ const Users = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email..."
             class="form-control"
+            onKeyDown={(e) => handleKeyDown(e)}
+          />
+
+          <input
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+            placeholder="Senha..."
+            class="form-control"
+            onKeyDown={(e) => handleKeyDown(e)}
           />
           <button class="btn btn-success" type="submit">Create</button>
         </div>
@@ -110,7 +137,7 @@ const Users = () => {
       </UserContainer>
       <Snackbar open={open} autoHideDuration={2000} onClose={() => setOpen(false)}>
         <Alert onClose={() => setOpen(false)} severity="success">
-          This is a success message!
+          Okay thats all rigth!
         </Alert>
       </Snackbar>
     </>

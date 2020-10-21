@@ -6,6 +6,13 @@ export const Body = styled.div`
 
 `;
 
+export const Header = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 40px;
+
+`;
+
 export const FormContainer = styled.form`
 
     margin: 0;

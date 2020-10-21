@@ -65,6 +65,10 @@ const deleteUser = (request, response) => {
     })
 }
 
+// const innerJoin = (request, response) => {
+//     const 
+// }
+
 module.exports = {
     getUsers,
     getUserById,

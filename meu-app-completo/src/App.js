@@ -2,18 +2,23 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
-import Routes from './Routes/index';
+import Routes from './routes';
 
 import GlobalStyles from './styles/global';
+import AppProvider from './hooks';
 
 const App = () => {
   return (
     <>
       <BrowserRouter>
-          <Routes />
+        <AppProvider>
+            <Routes />
+        </AppProvider>
       </BrowserRouter>
       <GlobalStyles />
     </>
+      
+
   );
 }
 
