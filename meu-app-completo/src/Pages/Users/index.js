@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
-import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
+// import Snackbar from "@material-ui/core/Snackbar";
+// import MuiAlert from "@material-ui/lab/Alert";
+
+import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 import api from "../../services/api";
 
@@ -9,7 +16,7 @@ import Modal from "../../components/Modal";
 import { 
   FormContainer,
   User,
-  Body,
+  // Body,
   Header,
   UserContainer
 } from './styles';
@@ -18,22 +25,38 @@ import { useAuth } from '../../hooks/auth';
 
 import { Link } from "react-router-dom";
 
+const useStyles = makeStyles(() => ({
+  formControl: {
+    margin: 1,
+    width: 100,
+    height: 100
+  },
+  selectEmpty: {
+    marginTop: 1,
+  },
+}));
+
 const Users = () => {
+
   const { signOut } = useAuth();
 
   const [usuarios, setUsuarios] = useState([]);
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [endereco, setEndereco] = useState([]);
+  const [age, setAge] = useState('');
 
   const [open, setOpen] = React.useState(false);
-
+  const classes = useStyles();
 
   const showUsers = async () => {
     try {
       const response = await api.get("users");
+      const responseE = await api.get("endereco");
       setUsuarios(response.data);
-      console.log(response);
+      setEndereco(responseE.data);
+      console.log(responseE.data)
     } catch (error) {
       console.log("showUsers: ", error);
     }
@@ -43,7 +66,8 @@ const Users = () => {
     const params = {
       name: `${nome}`,
       email: `${email}`,
-      senha: `${senha}`
+      senha: `${senha}`,
+      id_endereco: 3
     };
 
     try {
@@ -71,6 +95,11 @@ const Users = () => {
       console.log('do validate')
     }
   }
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+
   
 
   useEffect(() => {
@@ -86,7 +115,7 @@ const Users = () => {
     </Header>
 
       <FormContainer onSubmit={() => createUser()}>
-        <div>
+     
           <input
             value={nome}
             onChange={(e) => setNome(e.target.value)}
@@ -110,42 +139,61 @@ const Users = () => {
             class="form-control"
             onKeyDown={(e) => handleKeyDown(e)}
           />
+
+      <FormControl className={classes.formControl}>
+        <InputLabel id="demo-simple-select-helper-label">Cidade</InputLabel>
+        <Select
+          labelId="demo-simple-select-helper-label"
+          id="demo-simple-select-helper"
+          value={age}
+          onChange={handleChange}
+        >
+          {endereco.map(endereco => {
+            return(
+
+            <MenuItem value={endereco.endereco_id}>{endereco.cidade}</MenuItem>                    
+            )
+          })}
+
+        </Select>
+        <FormHelperText>Selecione sua cidade</FormHelperText>
+      </FormControl>
+
           <button class="btn btn-success" type="submit">Create</button>
-        </div>
       </FormContainer>
 
       <UserContainer>
         {usuarios.map((user) => {
           return (
-            <User key={user.id}>
+            <User key={user.user_id}>
                 <strong>Nome:</strong> {user.name}
                 <strong>Email:</strong> {user.email}
                 <button
                   type="button"
                   class="btn btn-dark btn-lg"
                   data-toggle="modal"
-                  data-target={`#modal${user.id}`}
+                  data-target={`#modal${user.user_id}`}
                 >
                   Edit
                 </button>
-                <button class="btn btn-danger btn-lg" onClick={() => deleteUser(user.id)}>Delete</button>
+                <button class="btn btn-danger btn-lg" onClick={() => deleteUser(user.user_id)}>Delete</button>
 
-              <Modal id={user.id} nome={user.name} email={user.email} />
+              <Modal id={user.user_id} nome={user.name} email={user.email} />
             </User>
           );
         })}
       </UserContainer>
-      <Snackbar open={open} autoHideDuration={2000} onClose={() => setOpen(false)}>
+      {/* <Snackbar open={open} autoHideDuration={2000} onClose={() => setOpen(false)}>
         <Alert onClose={() => setOpen(false)} severity="success">
           Okay thats all rigth!
         </Alert>
-      </Snackbar>
+      </Snackbar> */}
     </>
   );
 };
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+// function Alert(props) {
+//   return <MuiAlert elevation={6} variant="filled" {...props} />;
+// }
 
 export default Users;

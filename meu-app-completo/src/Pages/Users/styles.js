@@ -16,15 +16,16 @@ export const Header = styled.div`
 export const FormContainer = styled.form`
 
     margin: 0;
+    flex-direction: column;
 
-    div {
+    /* div {
         margin: 40px auto;
         padding: 20px;
         background: #ECE6D6;
         width: 60vw;
         border-radius: 5px;
         display: flex;
-    }
+    } */
 
     input {
         margin: 10px;

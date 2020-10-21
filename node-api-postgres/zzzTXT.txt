@@ -1,1 +1,54 @@
 npm i express pg
+
+DROP TABLE users;
+DROP TABLE endereco;
+
+CREATE TABLE endereco (
+	ENDERECO_ID SERIAL PRIMARY KEY,
+	PAIS VARCHAR(60),
+	ESTADO VARCHAR(60),
+	CIDADE VARCHAR(60)
+);
+
+CREATE TABLE users (
+	USER_ID SERIAL PRIMARY KEY,
+	NAME VARCHAR(50) NOT NULL,
+	EMAIL VARCHAR(60) NOT NULL,
+	SENHA VARCHAR(60) NOT NULL,
+	ID_ENDERECO INTEGER NOT NULL REFERENCES endereco(endereco_id)
+);
+
+INSERT INTO endereco 
+	(pais, estado, cidade) 
+VALUES 
+	('Brasil', 'Rio de Janeiro', 'Teresopolis'),
+	('Brasil', 'Sao Paulo', 'Sao Paulo'),
+	('Brasil', 'Santa Catarina', 'Florianopolis'),
+	('Brasil', 'Bahia', 'Salvador'),
+	('Brasil', 'Minas Gerais', 'Belo Horizonte');
+	
+INSERT INTO users 
+	(name, email, senha, id_endereco)
+VALUES 
+	('Guilherme Henrique', 'gui@gmail.com', '123456', 4),
+	('Paulo Eduardo Lucas Ferreira', 'dudu@gmail.com', '123456', 3),
+	('Lucca Nunes', 'luccazin@gmail.com', '123456', 2),
+	('Steve Jobs', 'tonin@gmail.com', '123456', 5),
+	('Gaby', 'gabyzinha@gmail.com', '123456', 1),
+	('Cicero Romano ', 'ciceromice@gmail.com', '123456', 3);
+
+SELECT * FROM users;
+SELECT * FROM endereco;
+
+SELECT
+	u.user_id,
+	u.name,
+	u.email,
+	u.senha,
+	e.pais,
+	e.estado,
+	e.cidade
+FROM
+	users u
+INNER JOIN endereco e
+    ON u.id_endereco = e.endereco_id;
