@@ -28,9 +28,9 @@ const getUserById = (request, response) => {
 }
 
 const createUser = (request, response) => {
-    const { name, email, senha, idEndereco } = request.body;
+    const { name, email, senha, id_endereco } = request.body;
 
-    pool.query('INSERT INTO users (name, email, senha, id_endereco) VALUES ($1, $2, $3, $4)', [name, email, senha, idEndereco], (error, results) => {
+    pool.query('INSERT INTO users (name, email, senha, id_endereco) VALUES ($1, $2, $3, $4)', [name, email, senha, id_endereco], (error, results) => {
         if(error) {
             throw error;
         }
@@ -57,7 +57,7 @@ const updateUser = (request, response) => {
 const deleteUser = (request, response) => {
     const id = parseInt(request.params.id)
 
-    pool.query('DELETE FROM users WHERE id = $1', [id], (error, results) => {
+    pool.query('DELETE FROM users WHERE user_id = $1', [id], (error, results) => {
         if(error) {
             throw error;
         }
@@ -66,7 +66,20 @@ const deleteUser = (request, response) => {
 }
 
 const innerJoin = (request, response) => {
-    pool.query('SELECT u.user_id, u.name, u.email, u.senha,	e.pais,	e.estado, e.cidade FROM	users u INNER JOIN endereco e ON u.id_endereco = e.endereco_id;', (error, results) => {
+    pool.query(`
+    SELECT 
+        u.user_id, 
+        u.name, 
+        u.email, 
+        u.senha,	
+        e.pais,	
+        e.estado, 
+        e.cidade 
+    FROM 
+        users u 
+            INNER JOIN 
+                endereco e 
+                    ON u.id_endereco = e.endereco_id;`, (error, results) => {
         if(error) {
             throw error;
         }

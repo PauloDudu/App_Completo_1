@@ -26,7 +26,10 @@ const Users2 = () => {
     <>
         <div>{usuarios.map(user => {
             return(
-            <h3><strong>Nome: </strong>{user.name}</h3>
+              <>
+                <h3><strong>Nome: </strong>{user.name}</h3>
+                <h3><strong>Cidade: </strong>{user.cidade}</h3>
+              </>
             );
         })}</div>
     

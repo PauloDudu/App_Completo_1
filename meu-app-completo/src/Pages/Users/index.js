@@ -47,6 +47,8 @@ const Users = () => {
   const [endereco, setEndereco] = useState([]);
   const [age, setAge] = useState('');
 
+  const [enderecoId, setEnderecoId] = useState('');
+
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
 
@@ -56,7 +58,8 @@ const Users = () => {
       const responseE = await api.get("endereco");
       setUsuarios(response.data);
       setEndereco(responseE.data);
-      console.log(responseE.data)
+      console.log(responseE.data);
+      console.log(response.data);
     } catch (error) {
       console.log("showUsers: ", error);
     }
@@ -67,7 +70,7 @@ const Users = () => {
       name: `${nome}`,
       email: `${email}`,
       senha: `${senha}`,
-      id_endereco: 3
+      id_endereco: `${enderecoId}`
     };
 
     try {
@@ -95,12 +98,7 @@ const Users = () => {
       console.log('do validate')
     }
   }
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-
-  
+ 
 
   useEffect(() => {
     showUsers();
@@ -111,6 +109,7 @@ const Users = () => {
     <Header>
     <button onClick={() => signOut()}>Logout</button>
     <Link to='/teste'>Teste</Link>
+    <Link to='/users2'>Teste2</Link>
 
     </Header>
 
@@ -145,13 +144,13 @@ const Users = () => {
         <Select
           labelId="demo-simple-select-helper-label"
           id="demo-simple-select-helper"
-          value={age}
-          onChange={handleChange}
+          value={enderecoId}
+          onChange={(e) => setEnderecoId(e.target.value)}
         >
           {endereco.map(endereco => {
             return(
 
-            <MenuItem value={endereco.endereco_id}>{endereco.cidade}</MenuItem>                    
+            <MenuItem  value={endereco.endereco_id}>{endereco.cidade}</MenuItem>                    
             )
           })}
 

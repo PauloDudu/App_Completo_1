@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 3333;
 const db = require('./queries');
-var cors = require('cors')
+var cors = require('cors');
 
 app.use(cors()) ;
 
