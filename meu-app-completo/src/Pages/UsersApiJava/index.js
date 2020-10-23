@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 
-import { api } from "../../services/api";
+import { api1 } from "../../services/api";
 
 import { Link } from "react-router-dom";
 
-const Users2 = () => {
+const UsersApijava = () => {
 
   const [usuarios, setUsuarios] = useState([]);
 
   const showUsers = async () => {
     try {
-      const response = await api.get("teste");
+      const response = await api1.get("users");
       setUsuarios(response.data);
       console.log(response.data);
     } catch (error) {
@@ -27,15 +27,12 @@ const Users2 = () => {
         <div>{usuarios.map(user => {
             return(
               <>
-                <h3><strong>Nome: </strong>{user.name}</h3>
-                <h3><strong>Cidade: </strong>{user.cidade}</h3>
+                <h3><strong>Email: </strong>{user.email}</h3>
+                <h3><strong>Senha: </strong>{user.senha}</h3>
               </>
             );
         })}</div>
-    
     </>
   );
 };
-
-
-export default Users2;
+export default UsersApijava;

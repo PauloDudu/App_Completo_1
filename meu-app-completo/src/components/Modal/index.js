@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import api from '../../services/api';
+import { api } from '../../services/api';
 
 
 const Modal = ({ id, nome, email }) => {

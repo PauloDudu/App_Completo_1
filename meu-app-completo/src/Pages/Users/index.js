@@ -9,7 +9,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-import api from "../../services/api";
+import { api } from "../../services/api";
 
 import Modal from "../../components/Modal";
 
@@ -110,6 +110,7 @@ const Users = () => {
     <button onClick={() => signOut()}>Logout</button>
     <Link to='/teste'>Teste</Link>
     <Link to='/users2'>Teste2</Link>
+    <Link to='/teste2'>Teste3</Link>
 
     </Header>
 
