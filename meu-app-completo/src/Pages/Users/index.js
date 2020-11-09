@@ -1,35 +1,30 @@
 import React, { useState, useEffect } from "react";
-// import Snackbar from "@material-ui/core/Snackbar";
-// import MuiAlert from "@material-ui/lab/Alert";
 
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import { makeStyles } from "@material-ui/core/styles";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 
+import BottomNavigator from "../../components/BottomNavigator";
 import { api } from "../../services/api";
-
 import Modal from "../../components/Modal";
 
-import { 
+import {
   FormContainer,
   User,
-  // Body,
   Header,
-  UserContainer
-} from './styles';
+  UserContainer,
+} from "./styles";
 
-import { useAuth } from '../../hooks/auth';
-
-import { Link } from "react-router-dom";
+import { useAuth } from "../../hooks/auth";
 
 const useStyles = makeStyles(() => ({
   formControl: {
     margin: 1,
     width: 100,
-    height: 100
+    height: 100,
   },
   selectEmpty: {
     marginTop: 1,
@@ -37,19 +32,15 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Users = () => {
-
   const { signOut } = useAuth();
 
   const [usuarios, setUsuarios] = useState([]);
-  const [nome, setNome] = useState('');
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
   const [endereco, setEndereco] = useState([]);
-  const [age, setAge] = useState('');
+  const [enderecoId, setEnderecoId] = useState("");
 
-  const [enderecoId, setEnderecoId] = useState('');
-
-  const [open, setOpen] = React.useState(false);
   const classes = useStyles();
 
   const showUsers = async () => {
@@ -70,16 +61,15 @@ const Users = () => {
       name: `${nome}`,
       email: `${email}`,
       senha: `${senha}`,
-      id_endereco: `${enderecoId}`
+      id_endereco: `${enderecoId}`,
     };
 
     try {
       const response = await api.post("users", params);
       console.log(response.data);
-      setOpen(true);
     } catch (error) {
       console.log("createUser: ", error);
-    } 
+    }
   };
 
   const deleteUser = async (id) => {
@@ -94,11 +84,10 @@ const Users = () => {
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      console.log('do validate')
+    if (event.key === "Enter") {
+      console.log("do validate");
     }
-  }
- 
+  };
 
   useEffect(() => {
     showUsers();
@@ -106,68 +95,69 @@ const Users = () => {
 
   return (
     <>
-    <Header>
-    <button onClick={() => signOut()}>Logout</button>
-    <Link to='/teste'>Teste</Link>
-    <Link to='/users2'>Teste2</Link>
-    <Link to='/teste2'>Teste3</Link>
-
-    </Header>
+      <BottomNavigator />
+      <Header>
+        <button onClick={() => signOut()}>Logout</button>
+      </Header>
 
       <FormContainer onSubmit={() => createUser()}>
-     
-          <input
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-            placeholder="Nome..."
-            class="form-control"
-            onKeyDown={(e) => handleKeyDown(e)}
-          />
+        <input
+          value={nome}
+          onChange={(e) => setNome(e.target.value)}
+          placeholder="Nome..."
+          class="form-control"
+          onKeyDown={(e) => handleKeyDown(e)}
+        />
 
-          <input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email..."
-            class="form-control"
-            onKeyDown={(e) => handleKeyDown(e)}
-          />
+        <input
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email..."
+          class="form-control"
+          onKeyDown={(e) => handleKeyDown(e)}
+        />
 
-          <input
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-            placeholder="Senha..."
-            class="form-control"
-            onKeyDown={(e) => handleKeyDown(e)}
-          />
+        <input
+          value={senha}
+          onChange={(e) => setSenha(e.target.value)}
+          placeholder="Senha..."
+          class="form-control"
+          onKeyDown={(e) => handleKeyDown(e)}
+        />
 
-      <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-helper-label">Cidade</InputLabel>
-        <Select
-          labelId="demo-simple-select-helper-label"
-          id="demo-simple-select-helper"
-          value={enderecoId}
-          onChange={(e) => setEnderecoId(e.target.value)}
-        >
-          {endereco.map(endereco => {
-            return(
+        <FormControl className={classes.formControl}>
+          <InputLabel id="demo-simple-select-helper-label">Cidade</InputLabel>
+          <Select
+            labelId="demo-simple-select-helper-label"
+            id="demo-simple-select-helper"
+            value={enderecoId}
+            onChange={(e) => setEnderecoId(e.target.value)}
+          >
+            {endereco.map((endereco) => {
+              return (
+                <MenuItem value={endereco.endereco_id}>
+                  {endereco.cidade}
+                </MenuItem>
+              );
+            })}
+          </Select>
+          <FormHelperText>Selecione sua cidade</FormHelperText>
+        </FormControl>
 
-            <MenuItem  value={endereco.endereco_id}>{endereco.cidade}</MenuItem>                    
-            )
-          })}
-
-        </Select>
-        <FormHelperText>Selecione sua cidade</FormHelperText>
-      </FormControl>
-
-          <button class="btn btn-success" type="submit">Create</button>
+        <button class="btn btn-success" type="submit">
+          Create
+        </button>
       </FormContainer>
 
       <UserContainer>
         {usuarios.map((user) => {
           return (
             <User key={user.user_id}>
-                <strong>Nome:</strong> {user.name}
-                <strong>Email:</strong> {user.email}
+              <div className="divInfo">
+                <strong>Nome:</strong> <h6>{user.name}</h6>
+                <strong>Email:</strong> <h6>{user.email}</h6>
+              </div>
+              <div className="buttonContainer">
                 <button
                   type="button"
                   class="btn btn-dark btn-lg"
@@ -176,24 +166,20 @@ const Users = () => {
                 >
                   Edit
                 </button>
-                <button class="btn btn-danger btn-lg" onClick={() => deleteUser(user.user_id)}>Delete</button>
-
-              <Modal id={user.user_id} nome={user.name} email={user.email} />
+                <button
+                  class="btn btn-danger btn-lg"
+                  onClick={() => deleteUser(user.user_id)}
+                >
+                  Delete
+                </button>
+              </div>
+              <Modal id={user.user_id} nome={user.name} email={user.email} showUsers={showUsers}/>
             </User>
           );
         })}
       </UserContainer>
-      {/* <Snackbar open={open} autoHideDuration={2000} onClose={() => setOpen(false)}>
-        <Alert onClose={() => setOpen(false)} severity="success">
-          Okay thats all rigth!
-        </Alert>
-      </Snackbar> */}
     </>
   );
 };
-
-// function Alert(props) {
-//   return <MuiAlert elevation={6} variant="filled" {...props} />;
-// }
 
 export default Users;

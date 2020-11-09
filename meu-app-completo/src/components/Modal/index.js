@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { api } from '../../services/api';
 
 
-const Modal = ({ id, nome, email }) => {
+const Modal = ({ id, nome, email, showUsers }) => {
 
   const [nomeNovo, setNomeNovo] = useState('');
   const [emailNovo, setEmailNovo] = useState('');
@@ -19,6 +19,8 @@ const Modal = ({ id, nome, email }) => {
       console.log(response.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      showUsers();
     }
   };
 

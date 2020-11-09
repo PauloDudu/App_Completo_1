@@ -15,17 +15,8 @@ export const Header = styled.div`
 
 export const FormContainer = styled.form`
 
-    margin: 0;
+    margin: 20px 100px;
     flex-direction: column;
-
-    /* div {
-        margin: 40px auto;
-        padding: 20px;
-        background: #ECE6D6;
-        width: 60vw;
-        border-radius: 5px;
-        display: flex;
-    } */
 
     input {
         margin: 10px;
@@ -36,16 +27,37 @@ export const FormContainer = styled.form`
         justify-content: center;
         align-items: center;
         height: 6vh;
-        margin: auto;
+        margin-left: auto;
     }
 `;
 
 export const UserContainer = styled.div`
 
+    div.divInfo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        h6 {
+            margin-top: 8px;
+        }
+    }
+
     strong {
         background: transparent;
         color: #260505;
-        margin: 3px 1px;
+        margin: 3px 3px;
+    }
+    
+    h6  {
+        margin-right: 5px;
+    }
+
+    div.buttonContainer {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        margin-left: auto;
     }
 
 
@@ -56,19 +68,20 @@ export const User = styled.div`
     background: #ECE6D6;
     display: flex;
     align-items: center;
-    flex-direction: column;
     margin: 20px auto;
     border-radius: 12px;
-    width: 40vw;
+    width: 70vw;
+    padding: 20px;
 
     button {
-        width: 10vw;
-        height: 5vh;
+        width: 8vw;
+        height: 4vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 5px auto;
+        margin: 5px 2px;
         transition: .3s;
+        padding: 12px;
 
         &:hover {
             opacity: .7;        
